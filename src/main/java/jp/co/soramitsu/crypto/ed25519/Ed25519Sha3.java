@@ -15,7 +15,7 @@ import jp.co.soramitsu.crypto.ed25519.spec.EdDSAPublicKeySpec;
 
 public class Ed25519Sha3 {
 
-  private static final EdDSAParameterSpec spec = EdDSANamedCurveTable.getByName(ED_25519);
+  public static final EdDSAParameterSpec spec = EdDSANamedCurveTable.getByName(ED_25519);
 
   static {
     Security.addProvider(new EdDSASecurityProvider());
