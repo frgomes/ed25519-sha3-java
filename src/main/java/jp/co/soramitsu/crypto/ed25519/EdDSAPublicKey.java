@@ -4,14 +4,10 @@ import java.security.PublicKey;
 import jp.co.soramitsu.crypto.ed25519.math.GroupElement;
 import jp.co.soramitsu.crypto.ed25519.spec.EdDSAParameterSpec;
 import jp.co.soramitsu.crypto.ed25519.spec.EdDSAPublicKeySpec;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /**
  * An EdDSA public key.
  */
-@EqualsAndHashCode
-@Getter
 public class EdDSAPublicKey implements EdDSAKey, PublicKey {
 
   private static final long serialVersionUID = 9837459837498475L;
@@ -49,5 +45,40 @@ public class EdDSAPublicKey implements EdDSAKey, PublicKey {
       Aneg = ourAneg;
     }
     return ourAneg;
+  }
+
+  public jp.co.soramitsu.crypto.ed25519.math.GroupElement getA() {
+    return A;
+  }
+
+  public byte[] getAbyte() {
+    return Abyte;
+  }
+
+  public jp.co.soramitsu.crypto.ed25519.math.GroupElement getAneg() {
+    return Aneg;
+  }
+
+  @Override
+  public jp.co.soramitsu.crypto.ed25519.spec.EdDSAParameterSpec getParams() {
+    return params;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    jp.co.soramitsu.crypto.ed25519.EdDSAPublicKey that = (jp.co.soramitsu.crypto.ed25519.EdDSAPublicKey) o;
+    return java.util.Objects.equals(A, that.A) &&
+            java.util.Arrays.equals(Abyte, that.Abyte) &&
+            java.util.Objects.equals(params, that.params) &&
+            java.util.Objects.equals(Aneg, that.Aneg);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = java.util.Objects.hash(A, params, Aneg);
+    result = 31 * result + java.util.Arrays.hashCode(Abyte);
+    return result;
   }
 }

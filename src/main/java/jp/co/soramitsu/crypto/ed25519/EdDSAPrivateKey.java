@@ -4,14 +4,10 @@ import java.security.PrivateKey;
 import jp.co.soramitsu.crypto.ed25519.math.GroupElement;
 import jp.co.soramitsu.crypto.ed25519.spec.EdDSAParameterSpec;
 import jp.co.soramitsu.crypto.ed25519.spec.EdDSAPrivateKeySpec;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /**
  * An EdDSA private key.
  */
-@EqualsAndHashCode
-@Getter
 public class EdDSAPrivateKey implements EdDSAKey, PrivateKey {
 
   private static final long serialVersionUID = 23495873459878957L;
@@ -52,5 +48,45 @@ public class EdDSAPrivateKey implements EdDSAKey, PrivateKey {
   @Override
   public byte[] getEncoded() {
     return seed;
+  }
+
+  public byte[] getSeed() {
+    return seed;
+  }
+
+  public byte[] getH() {
+    return h;
+  }
+
+  public byte[] getAbyte() {
+    return Abyte;
+  }
+
+  @Override
+  public jp.co.soramitsu.crypto.ed25519.spec.EdDSAParameterSpec getParams() {
+    return params;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    jp.co.soramitsu.crypto.ed25519.EdDSAPrivateKey that = (jp.co.soramitsu.crypto.ed25519.EdDSAPrivateKey) o;
+    return java.util.Arrays.equals(seed, that.seed) &&
+            java.util.Arrays.equals(h, that.h) &&
+            java.util.Arrays.equals(a, that.a) &&
+            java.util.Objects.equals(A, that.A) &&
+            java.util.Arrays.equals(Abyte, that.Abyte) &&
+            java.util.Objects.equals(params, that.params);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = java.util.Objects.hash(A, params);
+    result = 31 * result + java.util.Arrays.hashCode(seed);
+    result = 31 * result + java.util.Arrays.hashCode(h);
+    result = 31 * result + java.util.Arrays.hashCode(a);
+    result = 31 * result + java.util.Arrays.hashCode(Abyte);
+    return result;
   }
 }

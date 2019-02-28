@@ -1,8 +1,5 @@
 package jp.co.soramitsu.crypto.ed25519;
 
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
 public class Utils {
 
   /**
